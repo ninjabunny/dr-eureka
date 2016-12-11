@@ -1,0 +1,76 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Dr. Eureka Puzzle Generator</title>
+  <style>
+  	.circle {
+  	    width: 200px;
+  	    height: 200px;
+  	    border-radius: 50%;
+  	    margin: 4px 8px;
+  	}
+  	#main {
+  		display: flex;
+  		align-items: baseline;
+  	}
+  	.red {
+  		background: red;
+  	}
+  	.green {
+  		background: green;
+  	}
+  	.blue {
+  		background: blue;
+  	}
+  </style>
+</head>
+
+<body>
+	<div id="main">
+		<div id="tube1"></div>
+		<div id="tube2"></div>
+		<div id="tube3"></div>
+	</div>
+  <script>
+  var ballsOriginal = ["red", "green", "blue", "red", "green", "blue"];
+  var containersOriginal = [[],[],[]];
+  var tube1 = document.getElementById("tube1");
+  var tube2 = document.getElementById("tube2");
+  var tube3 = document.getElementById("tube3");
+
+  function fire() {
+  	var newBalls = ballsOriginal.slice();
+  	var newContainer = containersOriginal.slice();
+
+  	while (newBalls.length > 0) {
+  		var randBall = Math.floor(Math.random() * newBalls.length);
+  		var randContainer = Math.floor(Math.random() * newContainer.length);
+
+  		if (newContainer[randContainer].length < 4) {
+  			newContainer[randContainer].push(newBalls.splice(randBall, 1)[0]);
+  		}
+  	}
+
+	addBalls(tube1, newContainer[0]);
+	addBalls(tube2, newContainer[1]);
+	addBalls(tube3, newContainer[2]);  	
+	
+
+	function addBalls(tube, balls){
+		for(var i = 0; i<balls.length; i++) {
+			var innerDiv = document.createElement('div');
+			innerDiv.className = balls[i] + ' circle';
+			tube.appendChild(innerDiv);
+		}
+	}
+
+	
+  }
+  fire();
+
+  document.onclick=function(){location.reload()};
+  </script>
+</body>
+</html>
